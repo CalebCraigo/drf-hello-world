@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+
+    # local
+    'frontend.apps.FrontendConfig',
 ]
 
 MIDDLEWARE = [
@@ -76,15 +79,15 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if os.environ.get(‘DATABASE_URL’):
+if os.environ.get('DATABASE_URL'):
    DATABASES = {
-       ‘default’: dj_database_url.config(default=os.environ[‘DATABASE_URL’]),
+       'default': dj_database_url.config(default=os.environ['DATABASE_URL']),
    }
 else:
    DATABASES = {
-       ‘default’: {
-           ‘ENGINE’: ‘django.db.backends.sqlite3’,
-           ‘NAME’: os.path.join(BASE_DIR, ‘db.sqlite3’),
+       'default': {
+           'ENGINE': 'django.db.backends.sqlite3',
+           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
        }
    }
 
@@ -126,6 +129,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend/static/build/static'),
+)
+
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/static')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
